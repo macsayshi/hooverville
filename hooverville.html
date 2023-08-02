@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>What Hooverville Line Are You?</title>
+    <style>
+        body {
+            background-image: url("https://i.ytimg.com/vi/YhpTTZ9Nwp4/maxresdefault.jpg");
+            background-size: cover;
+            background-color: rgba(0, 0, 0, 0.4);
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        #random-line {
+            margin-top: 200px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #random-line:hover {
+            background-color: #45a049;
+        }
+
+        .loading {
+            display: none;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .answer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 50px auto;
+        }
+
+        .answer-box {
+            display: none;
+            width: 400px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+        }
+
+        #share-button {
+            display: none;
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #share-button:hover {
+            background-color: #d32f2f;
+        }
+
+        #fallback-button {
+            display: none;
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #fallback-button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <h1>What Hooverville Line Are You?</h1>
+    <button id="random-line">Show Random Line</button>
+    <div class="loading">
+        <img src="https://i.gifer.com/YCZH.gif" alt="Loading...">
+    </div>
+    <div class="answer-container">
+        <div class="answer-box" id="answer-box"></div>
+        <button id="share-button">Share My Hooverville Line</button>
+        <button id="fallback-button">Web Share API is not supported, copy to clipboard instead</button>
+    </div>
+
+    <script>
+        var lines = [
+            "Today we're living in a shanty",
+            "Today we're scrounging for a meal",
+            "Today I'm stealing coal for fires",
+            "Who knew I could steal?",
+            "I used to winter in the tropics",
+            "I spent my summers at the shore",
+            "I used to throw away the paper",
+            "We don't anymore!",
+            "We'd like to thank you, Herbert Hoover",
+            "For really showing us the way",
+            "We'd like to thank you Herbert Hoover",
+            "You made us what we are today",
+            "Prosperity was 'round the corner",
+            "The cozy cottage built for two",
+            "In this blue heaven",
+            "That you gave us",
+            "Yes!",
+            "We're turning blue!",
+            "They offered us Al Smith and Hoover",
+            "We paid attention and we chose",
+            "Not only did we pay attention",
+            "We paid through the nose",
+            "In ev'ry pot he said 'a chicken'",
+            "But Herbert Hoover he forgot",
+            "Not only don't we have the chicken",
+            "We ain't got the pot!",
+            "You left behind a grateful nation",
+            "So, Herb, our hats are off to you",
+            "We're up to here with admiration",
+            "Come down and have a little stew",
+            "Come down and share some Christmas dinner",
+            "Be sure to bring the missus too",
+            "We got no turkey for our stuffing",
+            "Why don't we stuff you?!",
+            "We'd like to thank you, Herbert Hoover (Thank you Herbie)",
+            "For really showing us the way",
+            "You dirty rat, you Bureaucrat, you",
+            "Made us what we are today",
+            "Come and get it, Herb!"
+        ];
+
+        var button = document.getElementById("random-line");
+        var loading = document.querySelector(".loading");
+        var answerBox = document.getElementById("answer-box");
+        var shareButton = document.getElementById("share-button");
+        var fallbackButton = document.getElementById("fallback-button");
+
+        button.addEventListener("click", function () {
+            button.style.display = "none";
+            loading.style.display = "block";
+
+            setTimeout(function () {
+                loading.style.display = "none";
+                answerBox.style.display = "block";
+
+                var randomIndex = Math.floor(Math.random() * lines.length);
+                var randomLine = lines[randomIndex];
+                answerBox.textContent = randomLine;
+
+                // Set line for sharing
+                var shareLine = "My Hooverville Line is: " + randomLine;
+
+                // Show share button if Web Share API is supported
+                if (navigator.share) {
+                    shareButton.style.display = "block";
+                } else {
+                    fallbackButton.style.display = "block";
+                }
+
+                // Add event listener to share button
+                shareButton.addEventListener("click", function () {
+                    navigator.share({
+                        title: "What Hooverville Line Are You?",
+                        text: shareLine + " Find yours now!",
+                        url: window.location.href
+                    })
+                        .then(() => console.log("Shared successfully"))
+                        .catch((error) => console.log("Error sharing:", error));
+                });
+
+                // Add event listener to fallback button
+                fallbackButton.addEventListener("click", function () {
+                    const textarea = document.createElement("textarea");
+                    textarea.value = shareLine;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(textarea);
+                    console.log("Text copied to clipboard");
+                });
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

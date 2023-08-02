@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Launcher</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+    h1 {
+      text-align: center;
+      color: #007BFF;
+      margin-bottom: 30px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+      display: flex;
+      justify-content: space-between;
+    }
+    li {
+      margin: 10px 0;
+    }
+    a {
+      text-decoration: none;
+      color: #007BFF;
+    }
+    #locked-links {
+      display: none;
+    }
+    .center-container {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .launcher-button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+    .launcher-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Web Launcher</h1>
+  <ul>
+    <li><a href="hooverville.html" target="_blank">What's my Hooverville line?</a></li>
+    <li><a href="sohcahtoa.html" target="_blank">What SOH CAH TOA am I?</a></li>
+  </ul>
+
+  <!-- Locked links section -->
+  <div id="locked-links">
+    <h2>You are authorised to see the locked section</h2>
+    <ul>
+      <li><a href="calc.html" target="_blank">Passione Profit Calculator</a></li>
+      <li><a href="https://drive.google.com/drive/folders/1kerSZuyDmaGSHkvioIW_4FOupoO8F997?usp=sharing" target="_blank">Passione Marketplace Directory</a></li>
+      <!-- Add more locked links as needed -->
+    </ul>
+  </div>
+
+  <!-- Centered container for the button -->
+  <div class="center-container">
+    <button class="launcher-button" id="unlock-button" onclick="checkPassword()">Unlock Access</button>
+  </div>
+
+  <script>
+    function checkPassword() {
+      const password = prompt("Enter the password to unlock the links:");
+
+      const correctPassword = "Passione12";
+
+      if (password === correctPassword) {
+        document.getElementById("locked-links").style.display = "block";
+        document.getElementById("unlock-button").style.display = "none";
+      } else {
+        alert("Incorrect password.");
+      }
+    }
+  </script>
+</body>
+</html>
